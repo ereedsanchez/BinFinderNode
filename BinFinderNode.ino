@@ -12,6 +12,7 @@ void setup() {
   Serial.begin(9600);
   // put your setup code here, to run once:
   pinMode(laser, OUTPUT);
+  digitalWrite(laser, LOW);
   servoX.attach(2);
   servoY.attach(3);
 
@@ -51,9 +52,12 @@ void loop() {
       posX = Position1;
       servoX.write(posX);
       delay(15);
+      digitalWrite(laser, HIGH);
+      delay(1000);
+      digitalWrite(laser, LOW);
       Serial.print("posX:");
       Serial.println(posX);
-      delay(100);
+      delay(10);
     }
 
 
@@ -62,12 +66,14 @@ void loop() {
       // map the result to a level from 0 to 255
       Position2 = map(Position2, 0, 100, 1, 180);
       posY = Position2;
-
+      servoY.write(posY);
+      digitalWrite(laser, HIGH);
+      delay(1000);
+      digitalWrite(laser, LOW);
       Serial.print("posY");
       Serial.println(posY);
 
-      servoY.write(posY);
-      delay(100);
+      delay(10);
 
     }
 
